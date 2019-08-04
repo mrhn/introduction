@@ -6,6 +6,7 @@ use App\Agreement;
 use App\Customer;
 use App\Delivery;
 use App\Invoice;
+use App\Services\InvoiceService;
 use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -17,6 +18,11 @@ class CustomerTest extends TestCase
      * @var Customer
      */
     private $customer;
+
+    /**
+     * @var InvoiceService
+     */
+    private $invoiceService;
 
     public function setUp()
     {
@@ -40,14 +46,15 @@ class CustomerTest extends TestCase
             'count' => 2,
             'customer_id' => $this->customer->id,
         ]);
+
+        $this->invoiceService = app(InvoiceService::class);
     }
 
     public function testCreateWeeklyInvoice()
     {
         $this->customer->agreement->type = Agreement::TYPE_WEEKLY;
 
-        // TODO: Implement test for create weekly invoice
-        $invoice = null; /* @var $invoice Invoice */
+        $invoice = $this->invoiceService->create($this->customer);
 
         $this->assertEquals(60,$invoice->amount);
     }
@@ -56,8 +63,7 @@ class CustomerTest extends TestCase
     {
         $this->customer->agreement->type = Agreement::TYPE_MONTHLY;
 
-        // TODO: Implement test for create monthly invoice
-        $invoice = null; /* @var $invoice Invoice */
+        $invoice = $this->invoiceService->create($this->customer);
 
         $this->assertEquals(84,$invoice->amount);
     }

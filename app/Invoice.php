@@ -16,4 +16,9 @@ class Invoice extends Model
     protected $fillable = [
         'invoice_no', 'invoice_due_at', 'amount',
     ];
+
+    public function agreement()
+    {
+        return $this->belongsTo(Agreement::class);
+    }
 }
