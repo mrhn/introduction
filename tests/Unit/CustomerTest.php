@@ -57,6 +57,16 @@ class CustomerTest extends TestCase
         $invoice = $this->invoiceService->create($this->customer);
 
         $this->assertEquals(60,$invoice->amount);
+
+        $this->assertDatabaseHas('deliveries', [
+            'count' => 5,
+            'payed' => 1,
+        ]);
+
+        $this->assertDatabaseHas('deliveries', [
+            'count' => 2,
+            'payed' => 0,
+        ]);
     }
 
     public function testCreateMonthlyInvoice()
@@ -66,5 +76,15 @@ class CustomerTest extends TestCase
         $invoice = $this->invoiceService->create($this->customer);
 
         $this->assertEquals(84,$invoice->amount);
+
+        $this->assertDatabaseHas('deliveries', [
+            'count' => 5,
+            'payed' => 1,
+        ]);
+
+        $this->assertDatabaseHas('deliveries', [
+            'count' => 2,
+            'payed' => 1,
+        ]);
     }
 }

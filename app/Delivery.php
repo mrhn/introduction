@@ -19,9 +19,14 @@ class Delivery extends Model
         'delivered_at', 'count',
     ];
 
-    public function scopeWithinAgreement(Builder $query, Carbon $interval)
+    public function scopeWithinAgreement(Builder $query, Carbon $interval): Builder
     {
         return $query->whereDate('delivered_at', '>=', $interval);
+    }
+
+    public function scopeNotPayed(Builder $query): Builder
+    {
+        return $query->where('payed', '!=', 1);
     }
 
     public function customer(): BelongsTo

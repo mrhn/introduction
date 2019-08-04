@@ -13,13 +13,20 @@ class InvoiceService
     {
         $agreement = $customer->agreement;
 
-        $deliveries = $customer->deliveries()->withinAgreement($agreement->invoiceInterval())->get();
+        $deliveries = $customer
+            ->deliveries()
+            ->notPayed()
+            ->withinAgreement($agreement->invoiceInterval())
+        ;
 
         $invoice = new Invoice([
             'invoice_no' => Uuid::uuid4(), // assuming something random is needed
             'invoice_due_at' => Carbon::now()->addDays(14), // assume this is the payment interval
-            'amount' => $deliveries->sum('count') * $agreement->unit_price,
+            'amount' => $deliveries->get()->sum('count') * $agreement->unit_price,
         ]);
+
+        // to avoid double payments for the same delivery
+        $deliveries->update(['payed' => true]);
 
         $invoice->agreement()->associate($agreement);
         $invoice->save();
