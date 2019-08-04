@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     protected $fillable = [
-        'name', 'agreement_id'
+        'name',
     ];
 
     public function getNumberAttribute()

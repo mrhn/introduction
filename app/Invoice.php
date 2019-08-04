@@ -14,6 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     protected $fillable = [
-        'agreement_id', 'invoice_no', 'invoice_due_at', 'amount'
+        'invoice_no', 'invoice_due_at', 'amount',
     ];
 }

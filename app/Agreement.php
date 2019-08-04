@@ -17,7 +17,7 @@ class Agreement extends Model
     const TYPE_MONTHLY = 'monthly';
 
     protected $fillable = [
-        'unit_price', 'type'
+        'unit_price', 'type',
     ];
 
 }
