@@ -22,7 +22,7 @@ class InvoiceService
         $invoice = new Invoice([
             'invoice_no' => Uuid::uuid4(), // assuming something random is needed
             'invoice_due_at' => Carbon::now()->addDays(14), // assume this is the payment interval
-            'amount' => $deliveries->get()->sum('count') * $agreement->unit_price,
+            'amount' => $deliveries->sum('count') * $agreement->unit_price,
         ]);
 
         // to avoid double payments for the same delivery
