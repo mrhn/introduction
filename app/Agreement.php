@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property float $unit_price
  * @property string $type
+ * @property Invoice[] $invoices
  *
  * @package App
  */
@@ -33,5 +34,10 @@ class Agreement extends Model
         }
 
         return $date->subMonth();
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
     }
 }
