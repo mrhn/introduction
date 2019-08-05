@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'CustomerController@index');
 
 Route::group(['prefix' => 'customer'], function () {
-    Route::get('/{id}', 'CustomerController@show');
-    Route::post('/invoice/{id}', 'CustomerController@invoice');
+    Route::get('/{customer}', 'CustomerController@show')->name('customer.show');
+    Route::post('/invoice/{customer}', 'CustomerController@invoice')->name('customer.invoice');
 });
 
 Route::get('/invoices', 'InvoiceController@index');

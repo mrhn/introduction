@@ -16,19 +16,15 @@ class CustomerController extends Controller
         return View::make('customers', compact('customers'));
     }
 
-    public function show($id)
+    public function show(Customer $customer)
     {
-        $customer = Customer::findOrFail($id);
         return View::make('customer', compact('customer'));
     }
 
     public function invoice(Request $request, Customer $customer, InvoiceService $invoiceService)
     {
-        /** @var Customer $customer */
-        $customer = Customer::findOrFail($customer);
-
         $invoiceService->create($customer);
 
-        return Redirect::action(self::class.'@show',['id' => $customer]);
+        return Redirect::route('customer.show',['id' => $customer]);
     }
 }
